@@ -1,5 +1,6 @@
 from . import db
-from datetime import datetime
+from datetime import datetime, timezone
+from sqlalchemy.orm import relationship
 
 
 class User(db.Model):
@@ -13,8 +14,8 @@ class User(db.Model):
     roles = db.Column(db.String(100))
     is_active = db.Column(db.Boolean, default=True)
     is_superuser = db.Column(db.Boolean, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow())
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow())
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -67,8 +68,8 @@ class Speaker(db.Model):
     position = db.Column(db.String(100), nullable=False)
     bio = db.Column(db.String(200), nullable=False)
     speaker_avatar = db.Column(db.String(100), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f'<Speaker {self.name}>'
